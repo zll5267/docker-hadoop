@@ -1,6 +1,7 @@
-FROM zll5267/hadoop-base:2.0.0-hadoop3.3.1-java8
+ARG HADOOP_VERSION=2.10.1
+FROM zll5267/hadoop-base:${HADOOP_VERSION}
 
-MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
+MAINTAINER zll <zll5267@163.com>
 
 HEALTHCHECK CMD curl -f http://localhost:8188/ || exit 1
 

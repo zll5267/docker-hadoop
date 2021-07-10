@@ -1,8 +1,11 @@
-FROM zll5267/hadoop-base:2.0.0-hadoop3.3.1-java8
+ARG HADOOP_VERSION=2.10.1
+FROM zll5267/hadoop-base:${HADOOP_VERSION}
 
-MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
+ARG HADOOP_VERSION
 
-HEALTHCHECK CMD curl -f http://localhost:9864/ || exit 1
+MAINTAINER zll <zll5267@163.com>
+
+HEALTHCHECK CMD curl -f http://localhost:50075/ || exit 1
 
 ENV HDFS_CONF_dfs_datanode_data_dir=file:///hadoop/dfs/data
 RUN mkdir -p /hadoop/dfs/data
@@ -11,6 +14,6 @@ VOLUME /hadoop/dfs/data
 ADD run.sh /run.sh
 RUN chmod a+x /run.sh
 
-EXPOSE 9864
+EXPOSE 50075
 
 CMD ["/run.sh"]

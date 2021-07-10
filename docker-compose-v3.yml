@@ -2,7 +2,7 @@ version: '3'
 
 services:
   namenode:
-    image: zll5267/hadoop-namenode:2.0.0-hadoop3.3.1-java8
+    image: zll5267/hadoop-namenode:${HADOOP_VERSION}
     networks:
       - hbase
     volumes:
@@ -24,7 +24,7 @@ services:
         traefik.port: 50070
 
   datanode:
-    image: zll5267/hadoop-datanode:2.0.0-hadoop3.3.1-java8
+    image: zll5267/hadoop-datanode:${HADOOP_VERSION}
     networks:
       - hbase
     volumes:
@@ -42,7 +42,7 @@ services:
         traefik.port: 50075
 
   resourcemanager:
-    image: zll5267/hadoop-resourcemanager:2.0.0-hadoop3.3.1-java8
+    image: zll5267/hadoop-resourcemanager:${HADOOP_VERSION}
     networks:
       - hbase
     environment:
@@ -64,7 +64,7 @@ services:
       disable: true
 
   nodemanager:
-    image: zll5267/hadoop-nodemanager:2.0.0-hadoop3.3.1-java8
+    image: zll5267/hadoop-nodemanager:${HADOOP_VERSION}
     networks:
       - hbase
     environment:
@@ -80,7 +80,7 @@ services:
         traefik.port: 8042
 
   historyserver:
-    image: zll5267/hadoop-historyserver:2.0.0-hadoop3.3.1-java8
+    image: zll5267/hadoop-historyserver:${HADOOP_VERSION}
     networks:
       - hbase
     volumes:

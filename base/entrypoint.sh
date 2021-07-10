@@ -31,6 +31,14 @@ function configure() {
     done
 }
 
+if [ ! -e /etc/hadoop/mapred-site.xml ]; then
+    echo "ok"
+    if [ -e /etc/hadoop/mapred-site.xml.template ]; then
+        echo "ok --"
+        cp /etc/hadoop/mapred-site.xml.template /etc/hadoop/mapred-site.xml
+    fi
+fi
+
 configure /etc/hadoop/core-site.xml core CORE_CONF
 configure /etc/hadoop/hdfs-site.xml hdfs HDFS_CONF
 configure /etc/hadoop/yarn-site.xml yarn YARN_CONF

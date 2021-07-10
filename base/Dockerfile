@@ -1,39 +1,26 @@
-FROM debian:9
+FROM openjdk:8
 
-MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
-MAINTAINER Giannis Mouchakis <gmouchakis@iit.demokritos.gr>
+MAINTAINER zll <zll5267@163.com>
+
+ARG HADOOP_VERSION=2.10.1
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-      openjdk-8-jdk \
-      net-tools \
-      curl \
-      netcat \
-      gnupg \
-      vim \
-      less \
-    && rm -rf /var/lib/apt/lists/*
+      net-tools curl netcat \
+      less vim
       
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
-
-RUN curl -O https://dist.apache.org/repos/dist/release/hadoop/common/KEYS
-
-RUN gpg --import KEYS
-
-ENV HADOOP_VERSION 3.3.1
+ENV HADOOP_VERSION ${HADOOP_VERSION}
 ENV HADOOP_URL https://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
 RUN set -x \
     && curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
     && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
-    && rm /tmp/hadoop.tar.gz*
+    && mv /opt/hadoop-$HADOOP_VERSION /opt/hadoop \
+    && rm /tmp/hadoop.tar.gz* \
+    && ln -s /opt/hadoop/etc/hadoop /etc/hadoop \
+    && mkdir /opt/hadoop/logs \
+    && mkdir /hadoop-data
 
-RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
-
-RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs
-
-RUN mkdir /hadoop-data
-
-ENV HADOOP_HOME=/opt/hadoop-$HADOOP_VERSION
+ENV HADOOP_HOME=/opt/hadoop
 ENV HADOOP_CONF_DIR=/etc/hadoop
 ENV MULTIHOMED_NETWORK=1
 ENV USER=root

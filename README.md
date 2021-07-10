@@ -16,12 +16,12 @@ To deploy an example HDFS cluster, run:
   docker-compose up
 ```
 
-Run example wordcount job:
+Run example wordcount job(not tested):
 ```
   make wordcount
 ```
 
-Or deploy in swarm:
+Or deploy in swarm(not tested):
 ```
 docker stack deploy -c docker-compose-v3.yml hadoop
 ```
@@ -30,11 +30,11 @@ docker stack deploy -c docker-compose-v3.yml hadoop
 
 Run `docker network inspect` on the network (e.g. `dockerhadoop_default`) to find the IP the hadoop interfaces are published on. Access these interfaces with the following URLs:
 
-* Namenode: http://<dockerhadoop_IP_address>:9870/dfshealth.html#tab-overview
-* History server: http://<dockerhadoop_IP_address>:8188/applicationhistory
-* Datanode: http://<dockerhadoop_IP_address>:9864/
+* Namenode: http://<dockerhadoop_IP_address>:50070/dfshealth.html#tab-overview
+* Datanode: http://<dockerhadoop_IP_address>:50075/
 * Nodemanager: http://<dockerhadoop_IP_address>:8042/node
 * Resource manager: http://<dockerhadoop_IP_address>:8088/
+* History server: http://<dockerhadoop_IP_address>:8188/applicationhistory
 
 ## Configure Environment Variables
 
@@ -61,3 +61,8 @@ The available configurations are:
 * /etc/hadoop/mapred-site.xml  MAPRED_CONF
 
 If you need to extend some other configuration file, refer to base/entrypoint.sh bash script.
+
+## zll update
+branch definition
+{HADOOP_RELEASE_VERSION}-j{JAVA_VERSION}
+e.g. 2.10.1-j8
